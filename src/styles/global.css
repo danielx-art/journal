@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --background: 8 10 31;
+  --bg-vfx: 199 46 49;
+  --accent: 199 46 49;
+  --primary: 69 81 196;
+  --secondary: 196 164 49;
+  --text: 230 232 240;
+  --neutral: 35 46 38;
+}
+
+.light {
+  --background: 247 248 250;
+  --bg-vfx: 26 28 43;
+  --accent: 176 32 35;
+  --primary: 58 70 168;
+  --secondary: 166 133 31;
+  --text: 26 28 43;
+  --neutral: 62 91 74;
+}
+
+.dark {
+  --background: 8 10 31;
+  --bg-vfx: 199 46 49;
+  --accent: 199 46 49;
+  --primary: 69 81 196;
+  --secondary: 196 164 49;
+  --text: 230 232 240;
+  --neutral: 35 46 38;
+}
+
+html {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 100%;
+  height: fit-content;
+  overflow-y: auto;
+  background-color: rgb(var(--background));
+}

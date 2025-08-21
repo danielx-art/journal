@@ -1,0 +1,26 @@
+---
+interface Props {
+  currentLang: "en" | "br";
+  translation?: {
+    lang: "en" | "br";
+    slug: string;
+    title: string;
+  };
+}
+
+const { currentLang, translation } = Astro.props;
+---
+
+{translation && (
+  <nav class="mt-6">
+    <p>
+      {currentLang === "en" ? "Leia em português:" : "Read in English:"}{" "}
+      <a
+        class="text-blue-600 underline"
+        href={`/${translation.lang}/posts/${translation.slug}`}
+      >
+        {translation.title}
+      </a>
+    </p>
+  </nav>
+)}

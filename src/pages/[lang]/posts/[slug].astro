@@ -1,0 +1,45 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import type { Lang } from "../../../types";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { lang: post.data.lang, slug: post.slug },
+  }));
+}
+
+const { lang, slug } = Astro.params as { lang: Lang; slug: string };
+
+const posts = await getCollection("posts");
+const post = posts.find((p) => p.data.lang === lang && p.slug === slug);
+
+if (!post) throw new Error(`Post not found: ${slug}`);
+
+const { Content } = await post.render();
+
+const translation = post.data.translationOf
+  ? posts.find(
+      (p) =>
+        p.data.translationOf === post.data.translationOf && p.data.lang !== lang
+    )
+  : null;
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  keywords={post.data.tags}
+  lang={lang}
+  slug={post.slug}
+  translation={translation
+    ? { lang: translation.data.lang, slug: translation.slug }
+    : undefined}
+>
+  <article>
+    <h1 class="text-3xl font-bold">{post.data.title}</h1>
+    <p class="text-gray-500">{post.data.date.toDateString()}</p>
+    <Content />
+  </article>
+</BaseLayout>

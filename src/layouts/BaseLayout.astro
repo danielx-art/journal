@@ -1,0 +1,61 @@
+---
+import "../styles/global.css";
+import { NavMenu } from "../components/NavMenu";
+import type { Lang } from "../types";
+
+interface Props {
+  title: string;
+  description?: string;
+  keywords?: string[];
+  lang: Lang;
+  slug?: string;
+  translation?: {
+    lang: Lang;
+    slug?: string;
+    title?: string;
+  };
+  image?: string;
+  basePath?: string;
+}
+
+const {
+  title,
+  description,
+  keywords,
+  lang,
+  slug,
+  translation,
+  image,
+  basePath = "",
+} = Astro.props;
+
+const baseUrl = "https://mydomain.com"; // <-- change to your domain
+const canonicalUrl = slug
+  ? `${baseUrl}/${lang}/posts/${slug}`
+  : `${baseUrl}/${lang}`;
+
+const homePath = lang === "br" ? `${basePath}/br/` : `${basePath}/en/`;
+const areWeHome =
+  Astro.url.pathname === homePath ||
+  Astro.url.pathname === basePath ||
+  Astro.url.pathname === basePath + "/";
+---
+
+<html lang={lang}>
+  <head>
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {keywords && <meta name="keywords" content={keywords.join(", ")} />}
+    <link rel="canonical" href={canonicalUrl} />
+  </head>
+  <body>
+    <NavMenu
+      client:load
+      areWeHome={areWeHome}
+      homePath={homePath}
+      lang={lang}
+      translation={translation}
+    />
+    <slot />
+  </body>
+</html>
