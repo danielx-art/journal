@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import type { Lang } from "../../../types";
+import LanguageSwitcher from "../../../components/LanguageSwitcher.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("posts");
@@ -19,12 +20,19 @@ if (!post) throw new Error(`Post not found: ${slug}`);
 
 const { Content } = await post.render();
 
-const translation = post.data.translationOf
+const translationData = post.data.translationOf
   ? posts.find(
-      (p) =>
-        p.data.translationOf === post.data.translationOf && p.data.lang !== lang
+      (p) => p.slug === post.data.translationOf && p.data.lang !== lang
     )
   : null;
+
+const translation=translationData
+        ? {
+            lang: translationData.data.lang as Lang,
+            slug: translationData.slug,
+            title: translationData.data.title,
+          }
+        : undefined
 ---
 
 <BaseLayout
@@ -33,13 +41,15 @@ const translation = post.data.translationOf
   keywords={post.data.tags}
   lang={lang}
   slug={post.slug}
-  translation={translation
-    ? { lang: translation.data.lang, slug: translation.slug }
-    : undefined}
+  translation={translation}
 >
   <article>
     <h1 class="text-3xl font-bold">{post.data.title}</h1>
-    <p class="text-gray-500">{post.data.date.toDateString()}</p>
+    <p class="text-neutral">{post.data.date.toDateString()}</p>
     <Content />
+    <LanguageSwitcher
+      currentLang={post.data.lang}
+      translation={translation}
+    />
   </article>
 </BaseLayout>

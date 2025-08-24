@@ -1,0 +1,64 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+import type { Lang } from "../types";
+
+interface Props {
+  areWeHome: boolean;
+  homePath: string;
+  lang: Lang;
+  translation?: {
+    lang: Lang;
+    slug?: string;
+    title?: string;
+  };
+}
+
+const { areWeHome, homePath, lang, translation } = Astro.props;
+
+const changeLangPath = translation
+  ? translation.slug
+    ? `/${translation.lang}/posts/${translation.slug}`
+    : `/${translation.lang}/`
+  : null;
+---
+
+<nav class="fixed left-1 top-0 flex flex-row items-center gap-2 text-text">
+  <ThemeToggle />
+
+  {
+    changeLangPath ? (
+      <a href={changeLangPath}>
+        <span class={lang === "br" ? "opacity-90" : "opacity-30"}>BR</span>
+        <span class="">|</span>
+        <span class={lang === "en" ? "opacity-90" : "opacity-30"}>EN</span>
+      </a>
+    ) : (
+      <span class="text-text/30 cursor-not-allowed">
+        <span class={lang === "br" ? "opacity-90" : "opacity-30"}>BR</span>
+        <span class="">|</span>
+        <span class={lang === "en" ? "opacity-90" : "opacity-30"}>EN</span>
+      </span>
+    )
+  }
+
+  {
+    !areWeHome && (
+      <a href={homePath} class="px-2 -translate-y-[1px]">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="size-5"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+          />
+        </svg>
+      </a>
+    )
+  }
+</nav>

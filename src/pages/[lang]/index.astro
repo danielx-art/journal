@@ -3,7 +3,6 @@ import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { Lang } from "../../types";
 
-// ✅ Tell Astro which paths to generate
 export async function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "br" } }];
 }
@@ -13,36 +12,38 @@ const { lang } = Astro.params as { lang: Lang };
 const posts = await getCollection("posts");
 const filteredPosts = posts.filter((p) => p.data.lang === lang);
 
-const translation = { lang: lang === "en" ? "br" : "en" } as const;
+const translation: { lang: Lang } =
+  lang === "en" ? { lang: "br" } : { lang: "en" };
 ---
 
 <BaseLayout
-  title={lang === "en" ? "My Dev Journal" : "Meu Diário de Projetos"}
+  title={lang === "en" ? "Daniel's Dev Journal" : "Blog Tec do Daniel"}
   description={lang === "en"
     ? "A dev journal documenting my projects."
     : "Um diário de desenvolvimento documentando meus projetos."}
   lang={lang}
   translation={translation}
 >
-  <h1 class="text-3xl font-bold mb-6">
-    {lang === "en" ? "Latest Posts" : "Últimos Posts"}
-  </h1>
-
-  <ul class="space-y-4">
-    {
-      filteredPosts.map((post) => (
-        <li>
-          <a
-            href={`/${lang}/posts/${post.slug}`}
-            class="text-xl text-blue-600 hover:underline"
-          >
-            {post.data.title}
-          </a>
-          <p class="text-gray-500 text-sm">
-            {post.data.date.toDateString()} — {post.data.description}
-          </p>
-        </li>
-      ))
-    }
-  </ul>
+  <div class="md:max-w-[800px]">
+    <h1 class="text-3xl mb-6">
+      {lang === "en" ? "Latest Posts" : "Últimos Posts"}
+    </h1>
+    <ul class="space-y-4">
+      {
+        filteredPosts.map((post) => (
+          <li>
+            <a
+              href={`/${lang}/posts/${post.slug}`}
+              class="text-xl hover:underline font-bold"
+            >
+              {post.data.title}
+            </a>
+            <p class="text-neutral text-sm">
+              &#8618; {post.data.description} -- {post.data.date.toDateString()}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
 </BaseLayout>
