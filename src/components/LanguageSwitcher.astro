@@ -1,26 +1,27 @@
 ---
+import type { Lang, Translation } from '../types';
+
 interface Props {
-  currentLang: "en" | "br";
-  translation?: {
-    lang: "en" | "br";
-    slug: string;
-    title: string;
-  };
+  currentLang: Lang;
+  translation?: Translation
 }
 
 const { currentLang, translation } = Astro.props;
 ---
 
-{translation && (
-  <nav class="mt-6 text-end text-neutral text-sm">
-    <p>
-      {currentLang === "en" ? "Leia em " : "Read in "}
-      <a
-        class="text-neutral hover:text-accent transition-all duration-[150ms] underline"
-        href={`/${translation.lang}/posts/${translation.slug}`}
-      >
-        {currentLang === "en" ? "Português" : "English"}
-      </a>.
-    </p>
-  </nav>
-)}
+{
+  translation && (
+    <nav class="mt-6 text-end text-neutral text-sm">
+      <p>
+        {currentLang === "en" ? "Leia em " : "Read in "}
+        <a
+          class="text-neutral hover:text-accent transition-all duration-[150ms] underline"
+          href={`/${translation.lang}/posts/${translation.slug}${Astro.url.search}`}
+        >
+          {currentLang === "en" ? "Português" : "English"}
+        </a>
+        .
+      </p>
+    </nav>
+  )
+}

@@ -2,7 +2,7 @@
 title: "Configurando o Astro"
 date: 2025-08-21
 lang: "br"
-translationOf: "astro-setup-en"
+translationOf: "astro-setup"
 description: "Testando a configuração do Astro em português."
 tags: ["astro", "configuração"]
 ---

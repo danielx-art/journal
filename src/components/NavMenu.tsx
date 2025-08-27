@@ -1,44 +1,51 @@
-
-import type { Lang } from "../types";
-import { ThemeToggleReact } from "./ThemeToggleReact";
+import React, { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
+import type { Lang, Translation } from "../types";
+import { Search } from "./Search";
 
 type NavMenuProps = {
   areWeHome: boolean;
   homePath: string;
   lang: Lang;
-  translation?: {
-    lang: Lang;
-    slug?: string;
-    title?: string;
-  };
+  translation?: Translation;
 };
 
-export const NavMenuReact: React.FC<NavMenuProps> = ({
+export const NavMenu: React.FC<NavMenuProps> = ({
   areWeHome,
   homePath,
   lang,
   translation,
 }) => {
+  // start with any server-provided query (homepage or post page may have provided it)
+  const [query, setQuery] = useState<string>(translation?.query ?? "");
+
+  // on client hydration, prefer the real location.search (keeps state accurate after client navigations)
+  useEffect(() => {
+    setQuery(window.location.search || "");
+  }, []);
+
+  const appendQuery = (path: string) => (query && query !== "?" ? `${path}${query}` : path);
+
   const changeLangPath = translation
     ? translation.slug
-      ? `/${translation.lang}/posts/${translation.slug}`
-      : `/${translation.lang}/`
+      ? appendQuery(`/${translation.lang}/posts/${translation.slug}`)
+      : appendQuery(`/${translation.lang}/`)
     : null;
 
   return (
-    <nav className="fixed left-1 top-0 flex flex-row items-center gap-2 text-text">
-      <ThemeToggleReact />
+    <nav className="fixed left-1 top-0 pt-2 flex flex-row items-center gap-2 text-text">
+      <ThemeToggle />
 
       {changeLangPath ? (
         <a href={changeLangPath}>
           <span className={lang === "br" ? "opacity-90" : "opacity-30"}>BR</span>
-          <span className="">|</span>
+          <span className="px-1">|</span>
           <span className={lang === "en" ? "opacity-90" : "opacity-30"}>EN</span>
         </a>
       ) : (
         <span className="text-text/30 cursor-not-allowed">
           <span className={lang === "br" ? "opacity-90" : "opacity-30"}>BR</span>
-          <span className="">|</span>
+          <span className="px-1">|</span>
           <span className={lang === "en" ? "opacity-90" : "opacity-30"}>EN</span>
         </span>
       )}
@@ -61,6 +68,7 @@ export const NavMenuReact: React.FC<NavMenuProps> = ({
           </svg>
         </a>
       )}
+      <Search lang={lang} preserveQuery={true} />
     </nav>
   );
 };

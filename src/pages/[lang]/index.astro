@@ -1,7 +1,8 @@
 ---
 import { getCollection } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import type { Lang } from "../../types";
+import type { Lang, Translation } from "../../types";
+import { PostsList } from "../../components/PostsList";
 
 export async function getStaticPaths() {
   return [{ params: { lang: "en" } }, { params: { lang: "br" } }];
@@ -10,10 +11,13 @@ export async function getStaticPaths() {
 const { lang } = Astro.params as { lang: Lang };
 
 const posts = await getCollection("posts");
-const filteredPosts = posts.filter((p) => p.data.lang === lang);
+const filtered = posts.filter((p) => p.data.lang === lang);
 
-const translation: { lang: Lang } =
-  lang === "en" ? { lang: "br" } : { lang: "en" };
+const currentQuery = Astro.url.search || "";
+
+const translation: Translation = lang === "en"
+  ? { lang: "br", query: currentQuery }
+  : { lang: "en", query: currentQuery };
 ---
 
 <BaseLayout
@@ -24,26 +28,7 @@ const translation: { lang: Lang } =
   lang={lang}
   translation={translation}
 >
-  <div class="md:max-w-[800px]">
-    <h1 class="text-3xl mb-6">
-      {lang === "en" ? "Latest Posts" : "Últimos Posts"}
-    </h1>
-    <ul class="space-y-4">
-      {
-        filteredPosts.map((post) => (
-          <li>
-            <a
-              href={`/${lang}/posts/${post.slug}`}
-              class="text-xl hover:underline font-bold"
-            >
-              {post.data.title}
-            </a>
-            <p class="text-neutral text-sm">
-              &#8618; {post.data.description} -- {post.data.date.toDateString()}
-            </p>
-          </li>
-        ))
-      }
-    </ul>
+  <div class="md:max-w-[800px] sm:w-3/5">
+    <PostsList client:load transition:persist lang={lang} posts={filtered} />
   </div>
 </BaseLayout>

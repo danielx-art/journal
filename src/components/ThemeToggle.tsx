@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const ThemeToggleReact: React.FC = () => {
+export const ThemeToggle: React.FC = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
 
   const applyTheme = (t: "light" | "dark") => {

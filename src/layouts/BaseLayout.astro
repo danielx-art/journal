@@ -1,9 +1,9 @@
 ---
 import "../styles/global.css";
-import NavMenu from "../components/NavMenu.astro";
+import {NavMenu} from "../components/NavMenu";
 import type { Lang } from "../types";
 import { ClientRouter } from "astro:transitions";
-import { NavMenuReact } from "../components/NavMenuReact";
+import Footer from "../components/Footer.astro";
 
 interface Props {
   title: string;
@@ -49,32 +49,51 @@ const areWeHome =
 
     <script is:inline>
       try {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else {
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme === "dark") {
+          document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+          document.documentElement.setAttribute("data-theme", "light");
+        }
+      } catch (e) {
         document.documentElement.setAttribute("data-theme", "light");
       }
-    } catch (e) {
-      document.documentElement.setAttribute("data-theme", "light");
-    }
     </script>
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {keywords && <meta name="keywords" content={keywords.join(", ")} />}
     <link rel="canonical" href={canonicalUrl} />
+    <link
+      rel="alternate"
+      hreflang={lang === "en" ? "en" : "pt-BR"}
+      href={canonicalUrl}
+    />
+    {
+      translation && (
+        <link
+          rel="alternate"
+          hreflang={translation.lang === "en" ? "en" : "pt-BR"}
+          href={
+            translation.slug
+              ? `${baseUrl}/${translation.lang}/posts/${translation.slug}`
+              : `${baseUrl}/${translation.lang}/`
+          }
+        />
+      )
+    }
   </head>
   <body>
-    <NavMenuReact
+    <NavMenu
       client:load
       areWeHome={areWeHome}
       homePath={homePath}
       lang={lang}
       translation={translation}
     />
-    <div class="mt-8 w-full h-full flex flex-col justify-center items-center">
+    <div class="mt-8 w-full h-full flex flex-col justify-center items-center px-8 py-4">
       <slot />
     </div>
+    <Footer currentLang={lang} />
     <ClientRouter />
   </body>
 </html>

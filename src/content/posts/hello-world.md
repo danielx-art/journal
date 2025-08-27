@@ -1,8 +1,8 @@
 ---
 title: "Hello World"
-date: 2025-08-20
+date: 2025-08-23
 lang: "en"
-translationOf: "hello-world-br"
+translationOf: "ola-mundo"
 description: "My first test post in English."
 tags: ["intro", "test"]
 ---

@@ -88,7 +88,19 @@ body {
   min-height: 100%;
   height: fit-content;
   overflow-y: auto;
-  background-color: rgb(var(--background));
   color: rgb(var(--text));
   transition: background-color 0.1s ease, color 0.1s ease;
+  background: url("./static-background-texture.jpg") repeat center ;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(var(--background));
+    opacity: 0.95;
+    z-index: -1;
 }

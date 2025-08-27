@@ -2,7 +2,7 @@
 title: "Setting up Astro"
 date: 2025-08-21
 lang: "en"
-translationOf: "astro-setup-br"
+translationOf: "configurando-astro"
 description: "Testing Astro setup in English."
 tags: ["astro", "setup"]
 ---
