@@ -1,0 +1,78 @@
+---
+// src/components/CodeWithCopy.astro
+import { Code } from "astro:components";
+const { code, lang = "js", theme, wrap = false } = Astro.props;
+---
+
+<div class="relative code-with-copy">
+  <div class="absolute right-2 top-2 z-10">
+    <button
+      type="button"
+      class="code-copy-btn px-2 py-1 text-sm rounded bg-neutral/10 hover:bg-neutral/20"
+      aria-label="Copy code"
+    >
+      Copy
+    </button>
+  </div>
+
+  <Code code={code} lang={lang} theme={theme} wrap={wrap} />
+</div>
+
+<script is:inline>
+  // Attach a single delegated listener once (survives client-side navigation)
+  if (!window.__codeCopyHandlerInstalled) {
+    window.__codeCopyHandlerInstalled = true;
+
+    document.addEventListener("click", (event) => {
+      const btn = event.target.closest && event.target.closest("button.code-copy-btn");
+      if (!btn) return;
+
+      // Find the closest pre > code element inside the same component wrapper
+      const container = btn.closest(".code-with-copy");
+      if (!container) return;
+      const codeEl = container.querySelector("pre code");
+      if (!codeEl) return;
+
+      const text = codeEl.innerText;
+      if (!text) return;
+
+      // Try clipboard API
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          () => {
+            const old = btn.textContent;
+            btn.textContent = "Copied";
+            setTimeout(() => (btn.textContent = old || "Copy"), 1200);
+          },
+          (err) => {
+            console.error("Clipboard write failed:", err);
+          }
+        );
+        return;
+      }
+
+      // Fallback: textarea + execCommand
+      try {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        // avoid scrolling to bottom
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        if (ok) {
+          const old = btn.textContent;
+          btn.textContent = "Copied";
+          setTimeout(() => (btn.textContent = old || "Copy"), 1200);
+        } else {
+          console.warn("execCommand copy returned false");
+        }
+      } catch (err) {
+        console.error("Fallback copy failed", err);
+      }
+    });
+  }
+</script>
