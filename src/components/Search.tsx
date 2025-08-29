@@ -129,7 +129,7 @@ export const Search: React.FC<Props> = ({ lang, preserveQuery = true, maxResults
   }, []);
 
   return (
-    <div className="relative">
+    <div className="px-2">
       <label className="sr-only" htmlFor="nav-search">
         {lang === "en" ? "Search posts" : "Buscar posts"}
       </label>
@@ -145,8 +145,8 @@ export const Search: React.FC<Props> = ({ lang, preserveQuery = true, maxResults
             loadIndex();
             if (results.length > 0) setOpen(true);
           }}
-          placeholder={lang === "en" ? "Search posts…" : "Buscar posts…"}
-          className="px-3 py-1 rounded border border-neutral/20 bg-transparent text-text w-48 md:w-64 focus:outline-none focus:ring-2 focus:ring-accent"
+          placeholder={lang === "en" ? "Search…" : "Buscar…"}
+          className="px-3 py-1 rounded border border-transparent hover:border-neutral/20 bg-transparent text-text w-48 md:w-64 focus:outline-none focus:ring-2 focus:ring-accent"
           aria-expanded={open}
           aria-controls="nav-search-list"
           aria-autocomplete="list"
@@ -183,7 +183,7 @@ export const Search: React.FC<Props> = ({ lang, preserveQuery = true, maxResults
       )}
 
       {open && results.length === 0 && query.trim() !== "" && (
-        <div className="absolute mt-2 w-full max-w-md bg-color-background border border-neutral/20 rounded p-3 text-neutral">
+        <div className="absolute mt-2 w-full max-w-md bg-background border border-neutral/20 rounded p-3 text-neutral">
           {lang === "en" ? "No results" : "Nenhum resultado"}
         </div>
       )}

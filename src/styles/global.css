@@ -5,6 +5,20 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "Ancizar Serif";
+  src: url("/fonts/AncizarSerif-VariableFont_wght.ttf");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/Inter-VariableFont_opsz,wght.ttf");
+  font-weight: 300 700;
+  font-display: swap;
+}
+
 @import "tailwindcss";
 
 @import "katex/dist/katex.min.css";
@@ -25,6 +39,7 @@
   --color-neutral: rgb(var(--neutral));
 
   --font-fira: "Fira Code", ui-monospace, monospace;
+  --font-serif: "Ancizar Serif"
 
   @keyframes zinzout {
     0%,
@@ -75,8 +90,8 @@ html {
   margin: 0;
   padding: 0;
   width: 100%;
-  min-height: 100%;
-  height: fit-content;
+  min-height: fit-content;
+  height: 100%;
   box-sizing: border-box;
 }
 
@@ -88,21 +103,23 @@ body {
   min-height: 100%;
   height: fit-content;
   overflow-y: auto;
+  position: relative;
   color: rgb(var(--text));
   transition: background-color 0.1s ease, color 0.1s ease;
-  background: url("./static-background-texture.jpg") repeat center;
+  background-color: rgb(var(--background));
 }
 
-body::before {
+body::after {
   content: "";
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgb(var(--background));
-  opacity: 0.95;
-  z-index: -1;
+  right: 0;
+  mix-blend-mode: multiply;
+  opacity: 0.07;
+  background: url("/static-background-texture.jpg") repeat center;
+  pointer-events: none;
 }
 
 /* Ensure Shiki variables are applied to .astro-code blocks */
@@ -125,17 +142,15 @@ body::before {
   background-color: var(--shiki-light-bg) !important;
 }
 
-.prose,
-article {
+.prose {
   line-height: 1.6;
-  color: rgb(var(--text));
-  font-size: 1rem;
-  font-family: ProximaVara,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Noto Sans,Ubuntu,Cantarell,Helvetica Neue,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;
+  font-size: 1.056rem;
+  font-family: "Inter";
 }
 
 /* headings */
 .prose h1{
-  font-size: 1.875rem; /* ~text-3xl */
+  font-size: 2.875rem; /* ~text-3xl */
   line-height: 1.25;
   font-weight: 700;
   margin-top: 0.75rem;
@@ -159,6 +174,11 @@ article {
 .prose p{
   margin: 0.5rem 0 0.75rem 0;
   color: rgb(var(--text));
+}
+
+.prose a{
+  color: rgb(var(--primary));
+  text-decoration: underline;
 }
 
 .prose ul{

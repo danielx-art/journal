@@ -28,12 +28,12 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 
   const changeLangPath = translation
     ? translation.slug
-      ? appendQuery(`/${translation.lang}/posts/${translation.slug}`)
-      : appendQuery(`/${translation.lang}/`)
+      ? appendQuery(`/blog/${translation.lang}/posts/${translation.slug}`)
+      : appendQuery(`/blog/${translation.lang}/`)
     : null;
 
   return (
-    <nav className="fixed left-1 top-0 pt-2 flex flex-row items-center gap-2 text-text">
+    <nav className="fixed left-0 top-0 px-2 py-2 flex flex-row items-center gap-2 text-text w-full ">
       <ThemeToggle />
 
       {changeLangPath ? (

@@ -84,7 +84,7 @@ export const PostsList: React.FC<Props> = ({ lang, posts }) => {
         {paginated.map((post) => (
           <li key={post.slug}>
             <a
-              href={`/${lang}/posts/${post.slug}`}
+              href={`/blog/${lang}/posts/${post.slug}`}
               className="text-xl hover:underline font-bold"
             >
               {post.data.title}
