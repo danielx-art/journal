@@ -31,15 +31,27 @@ const {
 } = Astro.props;
 
 const baseUrl = "https://danielx-art.github.io/journal";
-const canonicalUrl = slug
-  ? `${baseUrl}/${lang}/posts/${slug}`
-  : `${baseUrl}/${lang}`;
+// const canonicalUrl = slug
+//   ? `${baseUrl}/${lang}/posts/${slug}`
+//   : `${baseUrl}/${lang}`;
 
-const homePath = lang === "br" ? `${baseUrl}/br/` : `${baseUrl}/en/`;
+// const homePath = lang === "br" ? `${baseUrl}/br/` : `${baseUrl}/en/`;
+// const areWeHome =
+//   Astro.url.pathname === homePath ||
+//   Astro.url.pathname === baseUrl ||
+//   Astro.url.pathname === baseUrl + "/";
+
+const basePath = "/journal";
+const canonicalUrl = slug
+  ? `${Astro.site}${basePath}/${lang}/posts/${slug}`
+  : `${Astro.site}${basePath}/${lang}/`;
+
+const homePath = `${basePath}/${lang}/`;
+
 const areWeHome =
   Astro.url.pathname === homePath ||
-  Astro.url.pathname === baseUrl ||
-  Astro.url.pathname === baseUrl + "/";
+  Astro.url.pathname === basePath ||
+  Astro.url.pathname === basePath + "/";
 ---
 
 <html lang={lang}>

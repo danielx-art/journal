@@ -1,8 +1,28 @@
+---
+import type { Lang } from "../types";
+
+const acceptLang =
+  Astro.request.headers.get("accept-language") || "";
+
+let targetLang: Lang = "en";
+if (/pt/i.test(acceptLang)) {
+  targetLang = "br";
+}
+---
+
 <html lang="en">
   <head>
+    <meta http-equiv="refresh" content={`0; url=/journal/${targetLang}/`} />
     <title>Redirecting...</title>
   </head>
   <body>
-    <p>Redirecting to <a href="/journal/en/">English homepage</a>...</p>
+    <p>
+      Redirecting to
+      <a href={`/journal/${targetLang}/`}>homepage</a>...
+    </p>
+    <script>
+      // JS fallback (in case meta refresh is blocked)
+      window.location.replace("/journal/{{targetLang}}/");
+    </script>
   </body>
 </html>
