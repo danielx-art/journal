@@ -28,8 +28,8 @@ export const NavMenu: React.FC<NavMenuProps> = ({
 
   const changeLangPath = translation
     ? translation.slug
-      ? appendQuery(`/blog/${translation.lang}/posts/${translation.slug}`)
-      : appendQuery(`/blog/${translation.lang}/`)
+      ? appendQuery(`/journal/${translation.lang}/posts/${translation.slug}`)
+      : appendQuery(`/journal/${translation.lang}/`)
     : null;
 
   return (
