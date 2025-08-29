@@ -17,37 +17,22 @@ interface Props {
     title?: string;
   };
   image?: string;
-  basePath?: string;
 }
 
-const {
-  title,
-  description,
-  keywords,
-  lang,
-  slug,
-  translation,
-  image,
-} = Astro.props;
+const { title, description, keywords, lang, slug, translation, image } = Astro.props;
 
-const baseUrl = "https://danielx-art.github.io/journal";
-// const canonicalUrl = slug
-//   ? `${baseUrl}/${lang}/posts/${slug}`
-//   : `${baseUrl}/${lang}`;
-
-// const homePath = lang === "br" ? `${baseUrl}/br/` : `${baseUrl}/en/`;
-// const areWeHome =
-//   Astro.url.pathname === homePath ||
-//   Astro.url.pathname === baseUrl ||
-//   Astro.url.pathname === baseUrl + "/";
-
+// Use the same base as in astro.config.mjs
 const basePath = "/journal";
+
+// Canonical URL (absolute, for SEO)
 const canonicalUrl = slug
   ? `${Astro.site}${basePath}/${lang}/posts/${slug}`
   : `${Astro.site}${basePath}/${lang}/`;
 
+// Home path (relative, for navigation)
 const homePath = `${basePath}/${lang}/`;
 
+// Detect if we are on the homepage
 const areWeHome =
   Astro.url.pathname === homePath ||
   Astro.url.pathname === basePath ||
@@ -70,15 +55,22 @@ const areWeHome =
         document.documentElement.setAttribute("data-theme", "light");
       }
     </script>
+
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {keywords && <meta name="keywords" content={keywords.join(", ")} />}
+
+    <!-- Canonical -->
     <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Current language -->
     <link
       rel="alternate"
       hreflang={lang === "en" ? "en" : "pt-BR"}
       href={canonicalUrl}
     />
+
+    <!-- Translation (if exists) -->
     {
       translation && (
         <link
@@ -86,8 +78,8 @@ const areWeHome =
           hreflang={translation.lang === "en" ? "en" : "pt-BR"}
           href={
             translation.slug
-              ? `${baseUrl}/${translation.lang}/posts/${translation.slug}`
-              : `${baseUrl}/${translation.lang}/`
+              ? `${Astro.site}${basePath}/${translation.lang}/posts/${translation.slug}`
+              : `${Astro.site}${basePath}/${translation.lang}/`
           }
         />
       )
