@@ -11,7 +11,7 @@ export const onRequest: MiddlewareHandler = async (context, next) => {
       targetLang = "br";
     }
 
-    return context.redirect(`/${targetLang}/`);
+    return context.redirect(`/journal/${targetLang}/`);
   }
 
   return next();

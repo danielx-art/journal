@@ -9,7 +9,7 @@ import rehypeKatex from 'rehype-katex';
 
 export default defineConfig({
   site: 'https://danielx-art.github.io',
-  base: 'journal',
+  base: '/journal/',
   vite: {
     plugins: [tailwindcss()]
   },
