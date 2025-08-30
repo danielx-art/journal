@@ -24,12 +24,16 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     setQuery(window.location.search || "");
   }, []);
 
-  const appendQuery = (path: string) => (query && query !== "?" ? `${path}${query}` : path);
+  const appendQuery = (path: string) =>
+    query && query !== "?" ? `${path}${query}` : path;
+
+  // Use Astro's base path (from astro.config.mjs)
+  const basePath = import.meta.env.BASE_URL; // "/" in dev, "/journal/" in prod
 
   const changeLangPath = translation
     ? translation.slug
-      ? appendQuery(`/journal/${translation.lang}/posts/${translation.slug}`)
-      : appendQuery(`/journal/${translation.lang}/`)
+      ? appendQuery(`${basePath}${translation.lang}/posts/${translation.slug}`)
+      : appendQuery(`${basePath}${translation.lang}/`)
     : null;
 
   return (
