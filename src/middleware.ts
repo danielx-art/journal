@@ -1,18 +1,20 @@
-import type { MiddlewareHandler } from "astro";
-import type { Lang } from "./types";
+//Uncomment bellow if there is server-side run
 
-export const onRequest: MiddlewareHandler = async (context, next) => {
-  if (context.url.pathname === "/journal/") {
-    const acceptLang = context.request.headers.get("accept-language") || "";
+// import type { MiddlewareHandler } from "astro";
+// import type { Lang } from "./types";
 
-    let targetLang: Lang = "en";
+// export const onRequest: MiddlewareHandler = async (context, next) => {
+//   if (context.url.pathname === "/journal/") {
+//     const acceptLang = context.request.headers.get("accept-language") || "";
 
-    if (/pt/i.test(acceptLang)) {
-      targetLang = "br";
-    }
+//     let targetLang: Lang = "en";
 
-    return context.redirect(`/journal/${targetLang}/`);
-  }
+//     if (/pt/i.test(acceptLang)) {
+//       targetLang = "br";
+//     }
 
-  return next();
-};
+//     return context.redirect(`/journal/${targetLang}/`);
+//   }
+
+//   return next();
+// };

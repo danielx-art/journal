@@ -14,6 +14,10 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   markdown: {
+    remarkPlugins: [
+      remarkMath,
+    ],
+    rehypePlugins: [rehypeKatex],
     shikiConfig: {
       themes: {
         light: "github-light",

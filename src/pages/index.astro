@@ -8,6 +8,8 @@ let targetLang: Lang = "en";
 if (/pt/i.test(acceptLang)) {
   targetLang = "br";
 }
+
+return Astro.redirect(`/journal/${targetLang}/posts`)
 ---
 
 <html lang="en">
