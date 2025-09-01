@@ -29,7 +29,7 @@ const canonicalUrl = slug
   : `${Astro.site}${basePath}${lang}/`;
 
 // Home path (respects base config)
-const homePath = `${basePath}${lang}/`;
+const homePath = `${basePath}${lang}/`; //<--this repeats in dev /journal/en/journal/en? test
 
 const areWeHome =
   Astro.url.pathname === homePath ||
@@ -40,6 +40,9 @@ const areWeHome =
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/journal/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} >
 
     <script is:inline>
       try {
