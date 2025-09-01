@@ -37,18 +37,16 @@ export const PostsList: React.FC<Props> = ({ lang, posts }) => {
     const params = new URLSearchParams();
     if (sort !== "newest") params.set("sort", sort);
     if (page > 1) params.set("page", page.toString());
-    const newUrl = `/${lang}?${params.toString()}`;
+    const newUrl = `journal/${lang}?${params.toString()}`;
     window.history.replaceState({}, "", newUrl);
   }, [sort, page, lang]);
 
-  // Sort posts
   const sorted = [...posts].sort((a, b) =>
     sort === "oldest"
       ? a.data.date.getTime() - b.data.date.getTime()
       : b.data.date.getTime() - a.data.date.getTime()
   );
 
-  // Paginate
   const totalPages = Math.ceil(sorted.length / POSTS_PER_PAGE);
   const start = (page - 1) * POSTS_PER_PAGE;
   const paginated = sorted.slice(start, start + POSTS_PER_PAGE);

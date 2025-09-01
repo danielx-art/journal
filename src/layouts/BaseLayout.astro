@@ -21,7 +21,6 @@ interface Props {
 
 const { title, description, keywords, lang, slug, translation, image } = Astro.props;
 
-// Use Astro.site (from astro.config.mjs) + base
 const basePath = import.meta.env.BASE_URL; // "/journal/" in production, "/" in dev
 
 // Canonical URL (absolute, for SEO)
@@ -32,7 +31,6 @@ const canonicalUrl = slug
 // Home path (respects base config)
 const homePath = `${basePath}${lang}/`;
 
-// Detect if we are on the homepage
 const areWeHome =
   Astro.url.pathname === homePath ||
   Astro.url.pathname === basePath ||
@@ -60,17 +58,14 @@ const areWeHome =
     {description && <meta name="description" content={description} />}
     {keywords && <meta name="keywords" content={keywords.join(", ")} />}
 
-    <!-- Canonical -->
     <link rel="canonical" href={canonicalUrl} />
 
-    <!-- Current language -->
     <link
       rel="alternate"
       hreflang={lang === "en" ? "en" : "pt-BR"}
       href={canonicalUrl}
     />
 
-    <!-- Translation (if exists) -->
     {
       translation && (
         <link

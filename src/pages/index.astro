@@ -1,5 +1,8 @@
 ---
-import type { Lang } from "../types";
+import { getCollection } from "astro:content";
+import type { Lang, Translation } from "../types";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { PostsList } from "../components/PostsList";
 
 const acceptLang =
   Astro.request.headers.get("accept-language") || "";
@@ -9,22 +12,27 @@ if (/pt/i.test(acceptLang)) {
   targetLang = "br";
 }
 
+const posts = await getCollection("posts");
+const filtered = posts.filter((p) => p.data.lang === targetLang);
+
+const currentQuery = Astro.url.search || "";
+
+const translation: Translation = targetLang === "en"
+  ? { lang: "br", query: currentQuery }
+  : { lang: "en", query: currentQuery };
+
 return Astro.redirect(`/journal/${targetLang}`);
 ---
 
-<html lang="en">
-  <head>
-    <meta http-equiv="refresh" content={`0; url=/journal/${targetLang}/`} />
-    <title>Redirecting...</title>
-  </head>
-  <body>
-    <p>
-      Redirecting to
-      <a href={`/journal/${targetLang}/`}>homepage</a>...
-    </p>
-    <script>
-      // // JS fallback (in case meta refresh is blocked)
-      // window.location.replace("/journal/{{targetLang}}/");
-    </script>
-  </body>
-</html>
+<BaseLayout
+  title={targetLang === "en" ? "Daniel's Dev Journal" : "Blog Tec do Daniel"}
+  description={targetLang === "en"
+    ? "A dev journal documenting my projects."
+    : "Um diário de desenvolvimento documentando meus projetos."}
+  lang={targetLang}
+  translation={translation}
+>
+  <div class="md:max-w-[800px] sm:w-3/5">
+    <PostsList client:load transition:persist lang={targetLang} posts={filtered} />
+  </div>
+</BaseLayout>

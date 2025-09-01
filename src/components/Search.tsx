@@ -13,7 +13,7 @@ type PostIndex = {
 
 type Props = {
   lang: Lang;
-  preserveQuery?: boolean; // whether to append current querystring to results links
+  preserveQuery?: boolean;
   maxResults?: number;
 };
 
@@ -82,7 +82,7 @@ export const Search: React.FC<Props> = ({ lang, preserveQuery = true, maxResults
     };
   }, [query, index, maxResults]);
 
-  // keyboard handling
+  // keyboard
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!open) return;

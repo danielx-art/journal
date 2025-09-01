@@ -20,14 +20,12 @@ if (!post) throw new Error(`Post not found: ${slug}`);
 
 const { Content } = await post.render();
 
-// find translation entry (by translationOf)
 const translationEntry = post.data.translationOf
   ? posts.find(
       (p) => p.slug === post.data.translationOf && p.data.lang !== lang
     )
   : null;
 
-// include Astro.url.search so the switch preserves page/sort if present
 const pageQuery = Astro.url.search || "";
 
 const translation: Translation | undefined = translationEntry
