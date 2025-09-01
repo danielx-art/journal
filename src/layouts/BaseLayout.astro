@@ -16,10 +16,11 @@ interface Props {
     slug?: string;
     title?: string;
   };
+  areWeHome: boolean;
   image?: string;
 }
 
-const { title, description, keywords, lang, slug, translation, image } = Astro.props;
+const { title, description, keywords, lang, slug, translation, areWeHome, image } = Astro.props;
 
 const basePath = import.meta.env.BASE_URL; // "/journal/" in production, "/" in dev
 
@@ -27,15 +28,6 @@ const basePath = import.meta.env.BASE_URL; // "/journal/" in production, "/" in 
 const canonicalUrl = slug
   ? `${Astro.site}${basePath}${lang}/posts/${slug}`
   : `${Astro.site}${basePath}${lang}/`;
-
-// Home path (respects base config)
-//const homePath = `${basePath}${lang}/`; //<--this repeats in dev /journal/en/journal/en? test
-const homePath = `/`; //test deploy 21
-
-const areWeHome =
-  Astro.url.pathname === homePath ||
-  Astro.url.pathname === basePath ||
-  Astro.url.pathname === basePath + "/";
 ---
 
 <html lang={lang}>
@@ -88,7 +80,6 @@ const areWeHome =
     <NavMenu
       client:load
       areWeHome={areWeHome}
-      homePath={homePath}
       lang={lang}
       translation={translation}
     />

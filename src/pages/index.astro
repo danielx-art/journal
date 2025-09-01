@@ -31,6 +31,7 @@ return Astro.redirect(`/journal/${targetLang}`);
     : "Um diário de desenvolvimento documentando meus projetos."}
   lang={targetLang}
   translation={translation}
+  areWeHome={true}
 >
   <div class="md:max-w-[800px] sm:w-3/5">
     <PostsList client:load transition:persist lang={targetLang} posts={filtered} />

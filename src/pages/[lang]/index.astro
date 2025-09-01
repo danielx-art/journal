@@ -27,6 +27,7 @@ const translation: Translation = lang === "en"
     : "Um diário de desenvolvimento documentando meus projetos."}
   lang={lang}
   translation={translation}
+  areWeHome={true}
 >
   <div class="md:max-w-[800px] sm:w-3/5">
     <PostsList client:load transition:persist lang={lang} posts={filtered} />

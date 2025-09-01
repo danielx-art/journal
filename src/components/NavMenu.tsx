@@ -5,14 +5,12 @@ import { Search } from "./Search";
 
 type NavMenuProps = {
   areWeHome: boolean;
-  homePath: string;
   lang: Lang;
   translation?: Translation;
 };
 
 export const NavMenu: React.FC<NavMenuProps> = ({
   areWeHome,
-  homePath,
   lang,
   translation,
 }) => {
@@ -25,6 +23,8 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     query && query !== "?" ? `${path}${query}` : path;
 
   const basePath = import.meta.env.BASE_URL; //this is correct
+
+  const homePath = `${basePath}${lang}`; //test 22
 
   const changeLangPath = translation
     ? translation.slug
