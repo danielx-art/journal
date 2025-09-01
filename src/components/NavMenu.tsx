@@ -17,7 +17,6 @@ export const NavMenu: React.FC<NavMenuProps> = ({
   translation,
 }) => {
   const [query, setQuery] = useState<string>(translation?.query ?? "");
-
     useEffect(() => {
     setQuery(window.location.search || "");
   }, []);
@@ -26,12 +25,15 @@ export const NavMenu: React.FC<NavMenuProps> = ({
     query && query !== "?" ? `${path}${query}` : path;
 
   const basePath = import.meta.env.BASE_URL;
+  console.log(basePath); //debugg
 
   const changeLangPath = translation
     ? translation.slug
       ? appendQuery(`${basePath}${translation.lang}/posts/${translation.slug}`)
       : appendQuery(`${basePath}${translation.lang}/`)
     : null;
+
+    console.log(changeLangPath); //debugg
 
   return (
     <nav className="fixed left-0 top-0 px-2 py-2 flex flex-row items-center gap-2 text-text w-full ">
