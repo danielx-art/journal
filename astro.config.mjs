@@ -8,8 +8,8 @@ import rehypeKatex from 'rehype-katex';
 
 
 export default defineConfig({
-  site: 'https://danielx-art.github.io',
-  base: '/journal/',
+  site: 'https://danielx-art.github.io/journal',
+  base: '',
   vite: {
     plugins: [tailwindcss()]
   },
