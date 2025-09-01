@@ -24,16 +24,14 @@ export const NavMenu: React.FC<NavMenuProps> = ({
   const appendQuery = (path: string) =>
     query && query !== "?" ? `${path}${query}` : path;
 
-  const basePath = import.meta.env.BASE_URL;
-  console.log(basePath); //debugg
+  const basePath = import.meta.env.BASE_URL; //this is correct
 
   const changeLangPath = translation
     ? translation.slug
       ? appendQuery(`${basePath}${translation.lang}/posts/${translation.slug}`)
       : appendQuery(`${basePath}${translation.lang}/`)
-    : null;
+    : null; //this is correct
 
-    console.log(changeLangPath); //debugg
 
   return (
     <nav className="fixed left-0 top-0 px-2 py-2 flex flex-row items-center gap-2 text-text w-full ">
