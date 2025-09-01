@@ -13,18 +13,18 @@ return Astro.redirect(`/${targetLang}`);
 ---
 
 <html lang="en">
-  <!-- <head>
-    <meta http-equiv="refresh" content={`0; url=/journal/${targetLang}/`} />
+  <head>
+    <meta http-equiv="refresh" content={`0; url=/${targetLang}/`} />
     <title>Redirecting...</title>
   </head>
   <body>
     <p>
       Redirecting to
-      <a href={`/journal/${targetLang}/`}>homepage</a>...
+      <a href={`/${targetLang}/`}>homepage</a>...
     </p>
     <script>
-      // JS fallback (in case meta refresh is blocked)
-      window.location.replace("/journal/{{targetLang}}/");
+      // // JS fallback (in case meta refresh is blocked)
+      // window.location.replace("/journal/{{targetLang}}/");
     </script>
-  </body> -->
+  </body>
 </html>
