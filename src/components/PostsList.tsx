@@ -37,7 +37,8 @@ export const PostsList: React.FC<Props> = ({ lang, posts }) => {
     const params = new URLSearchParams();
     if (sort !== "newest") params.set("sort", sort);
     if (page > 1) params.set("page", page.toString());
-    const newUrl = `journal/${lang}?${params.toString()}`;
+    //const newUrl = `journal/${lang}?${params.toString()}`;
+    const newUrl = `?${params.toString()}`; //test deploy 21
     window.history.replaceState({}, "", newUrl);
   }, [sort, page, lang]);
 

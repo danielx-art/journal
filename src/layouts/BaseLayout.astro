@@ -29,7 +29,8 @@ const canonicalUrl = slug
   : `${Astro.site}${basePath}${lang}/`;
 
 // Home path (respects base config)
-const homePath = `${basePath}${lang}/`; //<--this repeats in dev /journal/en/journal/en? test
+//const homePath = `${basePath}${lang}/`; //<--this repeats in dev /journal/en/journal/en? test
+const homePath = `/`; //test deploy 21
 
 const areWeHome =
   Astro.url.pathname === homePath ||
