@@ -9,18 +9,18 @@ if (/pt/i.test(acceptLang)) {
   targetLang = "br";
 }
 
-return Astro.redirect(`/${targetLang}`);
+return Astro.redirect(`/journal/${targetLang}`);
 ---
 
 <html lang="en">
   <head>
-    <meta http-equiv="refresh" content={`0; url=/${targetLang}/`} />
+    <meta http-equiv="refresh" content={`0; url=/journal/${targetLang}/`} />
     <title>Redirecting...</title>
   </head>
   <body>
     <p>
       Redirecting to
-      <a href={`/${targetLang}/`}>homepage</a>...
+      <a href={`/journal/${targetLang}/`}>homepage</a>...
     </p>
     <script>
       // // JS fallback (in case meta refresh is blocked)
