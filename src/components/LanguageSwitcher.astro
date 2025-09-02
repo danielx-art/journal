@@ -11,16 +11,14 @@ const { currentLang, translation } = Astro.props;
 
 {
   translation && (
-    <nav class="mt-6 text-end text-neutral text-sm">
-      <p>
-        {currentLang === "en" ? "Leia em " : "Read in "}
+    <nav class="text-end text-neutral mb-12 text-sm text-md font-fira">
         <a
-          class="text-neutral hover:text-accent transition-all duration-[150ms] underline"
+          class="text-neutral hover:text-accent hover:bg-secondary/10 transition-all duration-[150ms] underline"
           href={`/journal/${translation.lang}/posts/${translation.slug}${Astro.url.search}`}
-        >
+          >
+          {currentLang === "en" ? "Leia em " : "Read in "}
           {currentLang === "en" ? "Português" : "English"}
-        </a>.  <!-- due to html white space weird parsing, the final dot must be juxtaposed with the closing a tag, not in the line bellow, because then there would be a blank space before the final dot -->
-      </p>
+        </a>  <!-- due to html white space weird parsing, the final dot must be juxtaposed with the closing a tag, not in the line bellow, because then there would be a blank space before the final dot -->
     </nav>
   )
 }

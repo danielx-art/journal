@@ -47,14 +47,14 @@ const translation: Translation | undefined = translationEntry
   translation={translation}
   areWeHome={false}
 >
-  <article class="md:max-w-[800px] sm:w-3/5 pt-8">
+  <article class="md:max-w-[800px] sm:w-[55%] pt-8">
+    <p class="opacity-70 text-right text-sm font-fira">
+      {post.data.date.toDateString()}
+    </p>
+    <h1 class="text-5xl font-bold text-center font-serif mt-[3.5rem] mb-[2.875rem]">{post.data.title}</h1>
     <div class="prose">
-      <h1 class="text-4xl font-bold text-center">{post.data.title}</h1>
-      <p class="opacity-70 text-right text-sm -translate-y-2">
-        {post.data.date.toDateString()}
-      </p>
       <Content />
-      <LanguageSwitcher currentLang={lang} translation={translation} />
     </div>
+    <LanguageSwitcher currentLang={lang} translation={translation} />
   </article>
 </BaseLayout>
