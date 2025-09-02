@@ -71,7 +71,7 @@ export const PostsList: React.FC<Props> = ({ lang, posts }) => {
 
   return (
     <>
-      <div className="w-full flex justify-end">
+      <div className="w-full flex justify-end mt-8">
         <SortToggle
           lang={lang}
           sort={sort}
@@ -79,30 +79,35 @@ export const PostsList: React.FC<Props> = ({ lang, posts }) => {
         />
       </div>
 
-      <ul className="space-y-4">
-        {paginated.map((post) => (
-          <li key={post.slug}>
-            <a
-              href={`/journal/${lang}/posts/${post.slug}`}
-              className="text-xl hover:underline font-bold"
-            >
-              {post.data.title}
-            </a>
-            <p className="text-neutral text-sm">
-              &#8618; {post.data.description} —{" "}
-              {new Date(post.data.date).toDateString()}
-            </p>
-          </li>
-        ))}
-      </ul>
-      {totalPages > 1 && <div className="w-full flex justify-center">
-        <Pagination
-          lang={lang}
-          page={page}
-          totalPages={totalPages}
-          onPageChange={setPage}
-        />
-      </div>}
+      <div className="md:max-w-[800px] sm:w-[50%]">
+        <ul className="space-y-4">
+          {paginated.map((post) => (
+            <li key={post.slug}>
+              <a href={`/journal/${lang}/posts/${post.slug}`}>
+                <div className="group hover:bg-secondary/10">
+                  <p className="text-xl group-hover:underline font-bold">
+                    {post.data.title}
+                  </p>
+                  <p className="text-neutral text-sm">
+                    &#8618; {post.data.description} —{" "}
+                    {new Date(post.data.date).toDateString()}
+                  </p>
+                </div>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      {totalPages > 1 && (
+        <div className="w-full flex justify-center">
+          <Pagination
+            lang={lang}
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        </div>
+      )}
     </>
   );
 };

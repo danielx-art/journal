@@ -27,7 +27,7 @@ export const SortToggle: React.FC<Props> = ({ lang, sort, onToggle }) => {
         }
         className="flex px-[2px] flex-nowrap gap-2 text-text/50 border-b-2 border-b-transparent hover:border-b-neutral hover:text-text cursor-pointer transition-all"
       >
-        <>{sort === "newest" ? labelNewest : labelOldest}</>
+        <div>{sort === "newest" ? labelNewest : labelOldest}</div>
         <div
           className={`${
             sort === "newest" ? "rotate-0" : "rotate-180"

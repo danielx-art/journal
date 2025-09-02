@@ -29,7 +29,5 @@ const translation: Translation = lang === "en"
   translation={translation}
   areWeHome={true}
 >
-  <div class="md:max-w-[800px] sm:w-3/5">
     <PostsList client:load transition:persist lang={lang} posts={filtered} />
-  </div>
 </BaseLayout>
