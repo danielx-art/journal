@@ -20,6 +20,7 @@
     "katex": "^0.16.22",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "rehype-external-links": "^3.0.0",
     "rehype-katex": "^7.0.1",
     "remark-math": "^6.0.0",
     "tailwindcss": "^4.1.12",

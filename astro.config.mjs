@@ -5,6 +5,7 @@ import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import remarkMath from "remark-math";
 import rehypeKatex from 'rehype-katex';
+import rehypeExternalLinks from 'rehype-external-links';
 
 
 export default defineConfig({
@@ -14,16 +15,20 @@ export default defineConfig({
     plugins: [tailwindcss()]
   },
   markdown: {
-    remarkPlugins: [
-      remarkMath,
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [
+      rehypeKatex,
+      [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
     ],
-    rehypePlugins: [rehypeKatex],
-    shikiConfig: {
-      themes: {
-        light: "github-light",
-        dark: "github-dark",
-      },
-    },
   },
-  integrations: [mdx({remarkPlugins: [remarkMath], rehypePlugins:[rehypeKatex]}), react()]
+  integrations: [
+    mdx({
+      remarkPlugins: [remarkMath],
+      rehypePlugins: [
+        rehypeKatex,
+        [rehypeExternalLinks, { target: "_blank", rel: ["noopener", "noreferrer"] }],
+      ],
+    }),
+    react(),
+  ],
 });
