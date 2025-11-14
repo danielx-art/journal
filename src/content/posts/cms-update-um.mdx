@@ -1,0 +1,78 @@
+---
+title: "Faça um teste - update um"
+date: 2025-11-14
+lang: "br"
+translationOf: "cms-update-one"
+description: "Um pouco mais sobre a estrutura do projeto Faça um Teste"
+tags: ["cms", "project", "faça um teste"]
+---
+
+Esse projeto está ficando cada vez mais complexo 😅. Tem uma parte de mim que quer focar só no básico (o MVP) e colocar algo utilizável no ar o mais rápido possível, e, ao mesmo tempo, faz sentido pensar a arquitetura em um nível mais completo — ainda que em alto nível — para que, mesmo começando pelo básico, as “vigas principais” já estejam no lugar para suportar o que vem depois.
+
+Talvez eu esteja sendo ingênuo, mas esse é um dilema clássico no desenvolvimento de software: decidir o quanto investir em estrutura agora vs. velocidade de entrega. Diria que é até algo mais comum, que está em qualquer tipo de desenvolvimento ou escolha. Por exemplo, na escolha de algoritmos, você equilibra “memória” e “tempo”. Um caso é na detecção de colisões, em que usar uma quadtree (que exige pré-processamento e memória) pode reduzir a complexidade de O(n²) para algo próximo de O(n·log n) em muitos casos.
+
+Então, vamos ao que interessa: tentar mapear da forma mais completa possível os fluxos dessa aplicação, mesmo que de forma declarativa e de alto nível, e do começo, ou seja:
+
+# O que acontece quando um usuário faz o login pela primeira vez, até chegar à dashboard de criação? 
+
+Mas fica o lembrete: não vamos explorar **todas** as possibilidades **tudo de uma vez** agora, a ideia não é fechar o mapa do usuário de ponta a ponta, mas registrar o esqueleto para evoluir.
+
+## Home
+
+- Ações principais: "Login", "Criar" e "Responder".
+- Ao clicar em “Login”, o usuário autentica e retorna à Home autenticada.
+
+## Home autenticada
+
+- Ações principais: "Logout", "Criar" e "Responder".
+- “Criar”: leva à Seleção de Espaço.
+- “Responder”: leva à página Responder.
+
+Vamos dividir esses dois caminhos:
+
+## 1. Selecionar Espaço
+
+Uma lista com os seus espaços, onde sempre existe o **Espaço Pessoal**, as **Minhas Organizações** de que faz parte e, possivelmente, **Grupos** (turmas) dentro dessas organizações. Além disso, há a opção de **criar uma nova organização**.
+
+Ao escolher um espaço → segue para a **Dashboard** desse espaço.
+
+## 2. Página Responder
+
+- NavBar com acessos rápidos (Logout, ir para Criar → Seleção de Espaço, alterar tema etc.).
+- Mostra avaliações que a pessoa pode realizar, com seções:
+  - **Em andamento**: avaliações que permitem pausar/retomar até um prazo.
+  - **Concluídas**: histórico do que já foi feito.
+  - **Disponíveis para você**: por espaço (públicas e de organizações/grupos dos quais participa).
+- Ao entrar em uma avaliação em andamento:
+  - Pode haver barra de progresso (se configurada; padrão: “sim”).
+  - Paginação padrão: 1 item por página (ou X itens por página, se configurado).
+  - Retoma do ponto onde parou (página do item, ou scroll até o item).
+- Ao entrar em uma avaliação concluída:
+  - Exibe data de realização e, conforme as políticas da avaliação, permite:
+    - ver respostas dadas;
+    - ver acertos/erros (quando aplicável);
+    - ver pontuação por item e total;
+    - ver estatísticas gerais agregadas do público.
+
+## Voltando à Dashboard (do espaço selecionado)
+
+A Dashboard deve conter a mesma NavBar da seção Responder (provavelmente presente em quase todas as páginas), e, neste contexto, também um menu para trocar de espaço (inclui “Nova organização”). Além disso, deve conter as seções/ações:
+
+1. **Nova avaliação**
+   - Cria uma nova avaliação vinculada ao espaço atual.
+2. **Em produção**
+   - Lista avaliações em fase editorial (revisão, qualidade, ajustes) ainda não publicadas.
+   - Indica o seu vínculo: dono, editor ou visualização/sugestão.
+3. **Aplicadas**
+   - Avaliações já publicadas/aplicadas (ativas/encerradas).
+   - Dependendo da configuração da avaliação:
+     - acompanhar resultados em tempo real; ou
+     - ver resultados apenas após o término.
+   - Acesso a estatísticas (conforme permissões).
+4. **Banco de Itens**
+   - Buscar itens nos bancos aos quais o usuário tem acesso, criar novo item, editar itens etc.
+
+Bom, e aí você entende quando eu disse que esse projeto está ficando cada vez mais complexo, né? Mas tudo bem, cada vez mais a fundação está clara: fluxos definidos, nomes consistentes e um caminho para ir com menos preocupação de um refatoramento difícil e desnecessário no futuro – não que não vá acontecer, mas pelo menos evitamos. 
+Até o momento eu comprei o domínio, configurei o DNS e o serviço de autenticação pelo Supabase (com o Google) e estou trabalhando na Home enquanto paralelamente desenho todos esses fluxos e mapas de usuário, me aprofundando cada vez mais nos detalhes para ir construindo o básico com atenção às “vigas”.
+
+Em breve eu conto mais!
